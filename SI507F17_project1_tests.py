@@ -15,13 +15,14 @@ class TestCard(unittest.TestCase):
 		self.test_card = Card()
 		self.test_card1 = Card(0,1)
 
-	def test_constructor(self):
+	def test_default_constructor(self):
     	# test for default constructor
 		self.assertEqual(self.test_card.suit, "Diamonds")
 		self.assertEqual(self.test_card.rank_num, 2)
 		self.assertEqual(self.test_card.rank, 2)
-        
-    	# test for non-default constructor
+    
+	def test_nondefault_constructor(self):    
+		# test for non-default constructor
 		self.assertEqual(self.test_card1.suit, "Diamonds")
 		self.assertEqual(self.test_card1.rank_num, 1)
 		self.assertEqual(self.test_card1.rank, "Ace")
@@ -40,8 +41,9 @@ class TestDeck(unittest.TestCase):
 		self.test_Deck2.pop_card(24)
 
 		self.test_Deck3 = Deck()
+		self.test_Deck4 = Deck()
 
-	def test_pop_card(self):
+	def test_pop_card_default(self):
     	# test pop_card with default input on full deck with 52 cards
 		self.test_Deck.pop_card()
     	# pop one last card
@@ -55,6 +57,7 @@ class TestDeck(unittest.TestCase):
 		self.test_Deck.pop_card()
 		self.assertEqual(len(self.test_Deck.cards),0)
 
+	def test_pop_card_nondefault(self):
         # test pop_card with non-default input
 		self.test_Deck1.pop_card(5)
 		self.assertEqual(self.test_Deck1.cards[5].rank_num,7)
@@ -63,18 +66,19 @@ class TestDeck(unittest.TestCase):
 		self.assertEqual(self.test_Deck1.cards[0].rank_num,2)
 		self.assertEqual(self.test_Deck1.cards[0].suit,"Diamonds")
 
-	def test_replace_card(self):
+	def test_replace_card_putback(self):
     	# if the input Card is not in the Deck --> should be put back into the Deck
 		self.assertEqual(len(self.test_Deck2.cards),51)	
 		self.test_Deck2.replace_card(Card(1,12))
 		self.assertEqual(len(self.test_Deck2.cards),52)
 
+	def test_replace_card_nochange(self):
 		# if the input Card is in the Deck --> no changes
 		self.test_Deck2.replace_card(Card(1,12))
 		self.test_Deck2.replace_card(Card(3,10))
 		self.assertEqual(len(self.test_Deck2.cards),52)
 
-	def test_sort_cards(self):
+	def test_sort_cards_fullDeck(self):
 		# sort with full Deck of cards
 		self.test_Deck3.shuffle()
 		self.test_Deck3.sort_cards()
@@ -85,6 +89,7 @@ class TestDeck(unittest.TestCase):
 		self.assertEqual(self.test_Deck3.cards[-3].suit,"Spades")
 		self.assertEqual(self.test_Deck3.cards[-3].rank_num,11)
 
+	def test_sort_cards_nonfullDeck(self):
 		# sort with non-full Deck of cards
 		self.test_Deck3.pop_card()
 		self.test_Deck3.pop_card()
@@ -98,10 +103,21 @@ class TestDeck(unittest.TestCase):
 		self.assertEqual(self.test_Deck3.cards[-2].rank_num,10)
 		self.assertEqual(self.test_Deck3.cards[-2].suit,"Spades")
 
-	def test_deal_hand():
+	def test_deal_hand(self):
+		# test for return object
+		self.assertEqual(len(self.test_Deck4.deal_hand(52)), 52)
 
+		# test for when the deck is not full
+		self.test_Deck4.shuffle()
+		self.test_Deck4.pop_card()
+		self.test_Deck4.pop_card()
+		self.assertEqual(len(self.test_Deck4.deal_hand(3)), 3)
 	def tearDown(self):
 		pass
+
+
+#class TestPlayWarGame(unittest.TestCase):
+#	def setUp(self):
 
 
 
