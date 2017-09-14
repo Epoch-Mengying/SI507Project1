@@ -14,6 +14,9 @@ class TestCard(unittest.TestCase):
 	def setUp(self):
 		self.test_card = Card()
 		self.test_card1 = Card(0,1)
+		self.test_card2 = Card(1,11)
+		self.test_card3 = Card(2,12)
+		self.test_card4 = Card(3,13) 
 
 	def test_default_constructor(self):
     	# test for default constructor
@@ -26,6 +29,21 @@ class TestCard(unittest.TestCase):
 		self.assertEqual(self.test_card1.suit, "Diamonds")
 		self.assertEqual(self.test_card1.rank_num, 1)
 		self.assertEqual(self.test_card1.rank, "Ace")
+
+	def test_string_method(self):
+		self.assertEqual(str(self.test_card1),"Ace of Diamonds")
+		
+	def test_self_var(self):
+		# test for self variables and also test for faces dictionary
+		self.assertEqual(self.test_card2.rank, "Jack")
+		self.assertEqual(self.test_card2.suit, "Clubs")
+		self.assertEqual(self.test_card2.rank_num, 11)
+		self.assertEqual(self.test_card3.rank, "Queen")
+		self.assertEqual(self.test_card3.suit, "Hearts")
+		self.assertEqual(self.test_card3.rank_num, 12)
+		self.assertEqual(self.test_card4.rank, "King")
+		self.assertEqual(self.test_card4.suit, "Spades")
+		self.assertEqual(self.test_card4.rank_num, 13)
 
 	def tearDown(self):
 		pass
@@ -42,6 +60,7 @@ class TestDeck(unittest.TestCase):
 
 		self.test_Deck3 = Deck()
 		self.test_Deck4 = Deck()
+		self.test_Deck5 = Deck()
 
 	def test_pop_card_default(self):
     	# test pop_card with default input on full deck with 52 cards
@@ -49,6 +68,7 @@ class TestDeck(unittest.TestCase):
     	# pop one last card
 		self.assertEqual(len(self.test_Deck.cards),51)
 		self.assertEqual(self.test_Deck.cards[-1].suit,"Spades")
+		self.assertEqual(self.test_Deck.cards[-1].rank_num,12)
     	# pop all cards
 		for i in range(0,50):
 			self.test_Deck.pop_card()
@@ -108,28 +128,34 @@ class TestDeck(unittest.TestCase):
 		self.assertEqual(len(self.test_Deck4.deal_hand(52)), 52)
 
 		# test for when the deck is not full
-		self.test_Deck4.shuffle()
-		self.test_Deck4.pop_card()
-		self.test_Deck4.pop_card()
-		self.assertEqual(len(self.test_Deck4.deal_hand(3)), 3)
+		self.test_Deck5.shuffle()
+		self.test_Deck5.pop_card()
+		self.test_Deck5.pop_card()
+		self.assertEqual(len(self.test_Deck5.deal_hand(3)), 3)
+
 	def tearDown(self):
 		pass
 
 
-#class TestPlayWarGame(unittest.TestCase):
-#	def setUp(self):
+class TestPlayWarGame(unittest.TestCase):
 
-
-
-
-
-
-
-
+	def test_play_war_game(self):
+		result = play_war_game(True)
+		print (result)
+		if result[0] == 'Tie':
+			self.assertEqual(result[1], result[2])
+		elif result[0] == 'Player1':
+			self.assertTrue(result[1]>result[2])
+		else:
+			self.assertTrue(result[1]<result[2])
 
 
 
 
 unittest.main(verbosity=2)
 
-## Bugs Detected! 1. sort_cards()
+## Bugs Detected! 1. sort_cards() 2. deal_hand() 3.string methods in Card class
+## Questions: 1. how to test string methods 2. string methods use self.rank or self.rank_num
+## 3. how to test play_war_game() 4. Piazza post
+
+
