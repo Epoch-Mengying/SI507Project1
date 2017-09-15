@@ -61,6 +61,7 @@ class TestDeck(unittest.TestCase):
 		self.test_Deck3 = Deck()
 		self.test_Deck4 = Deck()
 		self.test_Deck5 = Deck()
+		self.test_Deck6 = Deck()
 
 	def test_pop_card_default(self):
     	# test pop_card with default input on full deck with 52 cards
@@ -133,6 +134,12 @@ class TestDeck(unittest.TestCase):
 		self.test_Deck5.pop_card()
 		self.assertEqual(len(self.test_Deck5.deal_hand(3)), 3)
 
+	def test_shuffle(self):
+		cards_str = [str(card) for card in self.test_Deck6.cards]
+		self.test_Deck6.shuffle()
+		cards_after = [str(card) for card in self.test_Deck6.cards]
+		self.assertFalse(cards_str == cards_after)
+
 	def tearDown(self):
 		pass
 
@@ -141,7 +148,7 @@ class TestPlayWarGame(unittest.TestCase):
 
 	def test_play_war_game(self):
 		result = play_war_game(True)
-		print (result)
+		#print (result)
 		if result[0] == 'Tie':
 			self.assertEqual(result[1], result[2])
 		elif result[0] == 'Player1':
@@ -149,7 +156,11 @@ class TestPlayWarGame(unittest.TestCase):
 		else:
 			self.assertTrue(result[1]<result[2])
 
-
+class TestShowSong(unittest.TestCase):
+	def test_show_song(self):
+		s = show_song()
+		self.assertIsInstance(s, helper_functions.Song)
+		#self.assertTrue(isinstance(s,Song))
 
 
 unittest.main(verbosity=2)
