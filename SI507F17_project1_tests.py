@@ -1,3 +1,5 @@
+# Name: Mengying Zhang
+# Uniqname: zhangmen
 import unittest
 from SI507F17_project1_cards import *
 
